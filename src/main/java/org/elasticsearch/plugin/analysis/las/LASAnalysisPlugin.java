@@ -13,10 +13,18 @@ public class LASAnalysisPlugin extends Plugin implements AnalysisPlugin {
 
 
     private static final Map<String,AnalysisProvider<AnalyzerProvider<? extends Analyzer>>> analyzers = new HashMap<>();
+    private static final Map<String,AnalysisProvider<TokenizerFactory>> tokenizers = new HashMap<>();
 
     static {
         analyzers.put(LASAnalysisAnalyzerProvider.NAME, LASAnalysisAnalyzerProvider::new);
         analyzers.put(LASLemmaAnalyzerProvider.NAME, LASLemmaAnalyzerProvider::new);
+        tokenizers.put(LASAnalysisTokenizerProvider.NAME, LASAnalysisTokenizerProvider::new);
+        tokenizers.put(LASLemmaTokenizerProvider.NAME, LASLemmaTokenizerProvider::new);
+    }
+
+    @Override
+    public Map<String, AnalysisProvider<TokenizerFactory>> getTokenizers() {
+        return tokenizers;
     }
 
     @Override

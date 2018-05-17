@@ -1,33 +1,32 @@
 <?xml version="1.0"?>
 <assembly>
-    <id>plugin</id>
+    <id>plugin-non-fi</id>
     <formats>
         <format>zip</format>
     </formats>
     <includeBaseDirectory>false</includeBaseDirectory>
-    <fileSets>
-        <fileSet>
-            <directory>${project.basedir}/src/main/plugin-metadata</directory>
-            <includes>
-                <include>plugin-security.policy</include>
-            </includes>
-            <outputDirectory>/elasticsearch</outputDirectory>
-            <filtered>false</filtered>
-        </fileSet>
-    </fileSets>
     <files>
         <file>
             <source>${project.basedir}/src/main/resources/plugin-metadata/plugin-descriptor.properties</source>
             <outputDirectory>/elasticsearch</outputDirectory>
             <filtered>true</filtered>
         </file>
+        <file>
+            <source>${project.basedir}/src/main/resources/plugin-metadata/plugin-security.policy</source>
+            <outputDirectory>/elasticsearch</outputDirectory>
+            <filtered>false</filtered>
+        </file>
     </files>
     <dependencySets>
         <dependencySet>
             <outputDirectory>/elasticsearch</outputDirectory>
             <useProjectArtifact>true</useProjectArtifact>
-            <useTransitiveFiltering>true</useTransitiveFiltering>
+            <useTransitiveFiltering>false</useTransitiveFiltering>
             <useTransitiveDependencies>true</useTransitiveDependencies>
+            <excludes>
+                <exclude>fi.seco:lexicalanalysis-resources-fi</exclude>
+                <exclude>fi.seco:lexicalanalysis-resources-fi-core</exclude>
+            </excludes>
         </dependencySet>
     </dependencySets>
 </assembly>

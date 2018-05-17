@@ -15,7 +15,7 @@ public class LemmaAnalyzerTests extends BaseAnalyzerTest {
     public void testLemmaAnalyzer() throws Exception {
         testAnalyzerIgnoringPosition(LASLemmaAnalyzerProvider.NAME, Settings.EMPTY,
                 "Juoksin, läpi yön",
-                "juoksin", "juosta", "juosta", "läpi", "läpi", "yön", "yö");
+                "juoksin", "juosta", "läpi", "yön", "yö");
     }
 
     public void testOnlyLemmas() throws Exception {
@@ -25,10 +25,10 @@ public class LemmaAnalyzerTests extends BaseAnalyzerTest {
                 .build();
         testAnalyzerIgnoringPosition("test", settings,
                 "juoksin, läpi yön",
-                "juosta", "juosta", "läpi", "yö");
+                "juosta", "läpi", "yö");
         testAnalyzerIgnoringPosition("test", settings,
                 "olin kuin hullu",
-                "olla", "olla", "olla", "kuin", "kuin", "kuin", "hullu");
+                "olla", "kuin", "hullu");
     }
 
     public void testNoLowercasing() throws Exception {
@@ -38,7 +38,7 @@ public class LemmaAnalyzerTests extends BaseAnalyzerTest {
                 .build();
         testAnalyzerIgnoringPosition("test", settings,
                 "Juoksin, läpi yön",
-                "Juoksin", "juosta", "juosta", "läpi", "läpi", "yön", "yö");
+                "Juoksin", "juosta", "läpi", "yön", "yö");
     }
 
     public void testAllLemmas() throws Exception {
@@ -50,13 +50,8 @@ public class LemmaAnalyzerTests extends BaseAnalyzerTest {
         testAnalyzerIgnoringPosition("test", settings,
                 "olin kuin hullu",
                 "olla",
-                "olla",
-                "olla",
                 "olka",
                 "kuin",
-                "kuin",
-                "kuin",
-                "kui",
                 "kui",
                 "kuu",
                 "kuti",

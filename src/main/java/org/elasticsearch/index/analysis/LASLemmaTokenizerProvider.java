@@ -1,27 +1,23 @@
 package org.elasticsearch.index.analysis;
 
-import fi.seco.lucene.LemmaAnalyzer;
-import fi.seco.lucene.MorphologicalAnalyzer;
-import org.apache.lucene.analysis.LowerCaseFilter;
+import fi.seco.lucene.LemmaTokenizer;
 import org.elasticsearch.common.inject.Inject;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.env.Environment;
 import org.elasticsearch.index.IndexSettings;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 
-public class LASLemmaAnalyzerProvider extends AbstractIndexAnalyzerProvider<LemmaAnalyzer> {
+public class LASLemmaTokenizerProvider extends AbstractTokenizerFactory {
 
     public static final String NAME = "las_lemma";
 
-    private final LemmaAnalyzer analyzer;
+    private final LemmaTokenizer tokenizer;
 
     @Inject
     @SuppressWarnings("unused")
-    public LASLemmaAnalyzerProvider(IndexSettings indexSettings, Environment env, String name,
-                                    Settings settings) {
+    public LASLemmaTokenizerProvider(IndexSettings indexSettings, Environment env, String name,
+                                     Settings settings) {
         super(indexSettings, name, settings);
         Locale locale = new Locale(settings.get("locale", "fi"));
         boolean originalWords = settings.getAsBoolean("include_original_words",true);
@@ -29,14 +25,13 @@ public class LASLemmaAnalyzerProvider extends AbstractIndexAnalyzerProvider<Lemm
         boolean guessUnknown = settings.getAsBoolean("guess_lemmas_for_unknown_words",true);
         int maxEditDistance = settings.getAsInt("ocr_corr_max_edit_distance",0);
         int depth = settings.getAsInt("analysis_depth",1);
-        boolean lowercase = settings.getAsBoolean("lowercase", true);
         boolean nonWords = settings.getAsBoolean("include_punctuation", false);
         boolean unique = !settings.getAsBoolean("include_multiple_copies", false);
-        analyzer = new LemmaAnalyzer(locale,originalWords,allLemmas,guessUnknown,maxEditDistance,depth,nonWords,lowercase, unique);
+        tokenizer = new LemmaTokenizer(locale,originalWords,allLemmas,guessUnknown,maxEditDistance,depth,nonWords, unique);
     }
 
     @Override
-    public LemmaAnalyzer get() {
-        return this.analyzer;
+    public LemmaTokenizer create() {
+        return this.tokenizer;
     }
 }
